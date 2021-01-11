@@ -68,4 +68,24 @@ public class ExampleUnitTest {
         assertEquals(1,brb.getWriteIndex());
         assertEquals(1,brb.getReaderIndex());
     }
+    public void afficher(byte[] b ){
+        System.out.print("[");
+        for (int ii = 0 ; ii< b.length-1;ii++){
+
+            System.out.print(b[ii]);
+            System.out.print(" , ");
+        }
+        System.out.print(b[b.length-1]);
+        System.out.print("]");
+
+    }
+
+    @Test
+    public void Frame(){
+        FrameProcessor mFP = new FrameProcessor();
+        mFP.toFrame(new byte[]{0x0A,6});
+        byte[] txFrame = mFP.getTxFrame();
+        afficher(txFrame);
+
+    }
 }

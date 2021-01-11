@@ -11,12 +11,16 @@ import java.util.UUID;
 
 public class BTManager extends Transceiver {
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private BluetoothAdapter mAdapter;
+    private BluetoothAdapter mAdapter = BluetoothAdapter.getDefaultAdapter();
     private BluetoothSocket mSocket = null;
     private ConnectThread mConnectThread = null;
     private WritingThread mWritingThread = null;
     private ByteRingBuffer mByteRingBuffer = new ByteRingBuffer(255);
 
+    /**
+     *
+     * @param str   le Nom
+     */
     @Override
     public void connect(String str) {
         BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(str);
@@ -28,13 +32,19 @@ public class BTManager extends Transceiver {
 
     @Override
     public void disconnect() {
+       // BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().;
+        //disconnect();
+        //mConnectThread = new ConnectThread(device);
+        setState(STATE_NOT_CONNECTED);
+        mConnectThread=null;
 
 
     }
 
     @Override
     public void send(byte[] b) {
-
+        mByteRingBuffer.put(b);
+       // mWritingThread.start();
     }
 
 
@@ -76,12 +86,26 @@ public class BTManager extends Transceiver {
             }
 
         }
+        public void afficher(byte[] b ){
+            System.out.print("[");
+            for (int ii = 0 ; ii< b.length-1;ii++){
+
+                System.out.print(b[ii]);
+                System.out.print(" , ");
+            }
+            System.out.print(b[b.length-1]);
+            System.out.print("]");
+
+        }
 
         @Override
         public void run() {
             while (mSocket !=null){
                 try {
-                    mOutStream.write(mByteRingBuffer.get());
+                    byte[] b=mByteRingBuffer.getAll();
+                    mOutStream.write(b);
+                    afficher(b);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
