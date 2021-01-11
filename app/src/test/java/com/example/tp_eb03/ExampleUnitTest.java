@@ -41,6 +41,7 @@ public class ExampleUnitTest {
         assertEquals(4,brb.getWriteIndex());
         assertEquals(1,brb.getReaderIndex());
         byte bb= brb.get();
+        assertEquals(1,bb);
         byte[] bytes=brb.getAll();
         //System.out.println();
         assertEquals(2,bytes.length);

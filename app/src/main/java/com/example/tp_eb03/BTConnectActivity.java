@@ -58,6 +58,7 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
 
         mPairedList.setAdapter(mPairedAdapter);
         mDiscoveredList.setAdapter(mDiscoveredAdapter);
+        mScan.setOnClickListener(this);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -126,6 +127,8 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -141,6 +144,7 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
                 toggleBtScan();
                 break;
         }
+
     }
 
     @Override

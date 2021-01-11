@@ -24,12 +24,11 @@ public class BTManager extends Transceiver {
         mConnectThread = new ConnectThread(device);
         setState(STATE_CONNECTING);
         mConnectThread.start();
-
-
     }
 
     @Override
     public void disconnect() {
+
 
     }
 
@@ -50,7 +49,6 @@ public class BTManager extends Transceiver {
 
         public void run(){
             mAdapter.cancelDiscovery();
-
             try {
                 mSocket.connect();
             } catch (IOException e) {

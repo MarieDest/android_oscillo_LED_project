@@ -22,13 +22,14 @@ public class MainActivity extends AppCompatActivity {
     private final static int BT_CONNECT_CODE = 1;
     private final static int PERMISSIONS_REQUEST_CODE= 0;
     private final static String[] BT_DANGEROUS_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
-    private TextView mstatus;
+    private TextView mStatus;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mStatus = findViewById(R.id.status);
         verifyBtRights();
 
     }
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             case BT_CONNECT_CODE:
                 if (resultCode == RESULT_OK) {
                     String address= data.getStringExtra("device");
-                    mstatus.setText(address);
+                    mStatus.setText(address);
                 }
                 break;
             default:
