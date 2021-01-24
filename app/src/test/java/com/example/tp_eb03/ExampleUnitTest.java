@@ -83,7 +83,7 @@ public class ExampleUnitTest {
     @Test
     public void Frame(){
         FrameProcessor mFP = new FrameProcessor();
-        mFP.toFrame(new byte[]{0x0A,6});
+        mFP.toFrame(new byte[]{0x0A,11});
         byte[] txFrame = mFP.getTxFrame();
         afficher(txFrame);
 

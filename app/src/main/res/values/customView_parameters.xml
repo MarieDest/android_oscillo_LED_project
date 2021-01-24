@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomView">
+        <attr name="ExteriorCircleDiameter" format = "dimension"/>
+        <attr name="MiddleCircleDiameter" format = "dimension"/>
+        <attr name="InnerCircleDiameter" format = "dimension"/>
+        <attr name="ExteriorCircleColor" format = "color"/>
+        <attr name="MiddleCircleColor" format = "color"/>
+        <attr name="InnerCircleColor" format="color"/>
+        <attr name="TextColor" format="color"/>
+        <attr name="EnableLongLines"   format="boolean"/>
+        <attr name="EnableLittleLines" format="boolean"/>
+        <attr name="EnableText" format="boolean"/>
+        <attr name="enable" format = "boolean"/>
+
+    </declare-styleable>
+</resources>

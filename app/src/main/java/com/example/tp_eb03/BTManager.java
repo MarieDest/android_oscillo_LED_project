@@ -3,6 +3,8 @@ package com.example.tp_eb03;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
@@ -15,7 +17,15 @@ public class BTManager extends Transceiver {
     private BluetoothSocket mSocket = null;
     private ConnectThread mConnectThread = null;
     private WritingThread mWritingThread = null;
+
+    public ByteRingBuffer getByteRingBuffer() {
+        return mByteRingBuffer;
+    }
+
     private ByteRingBuffer mByteRingBuffer = new ByteRingBuffer(255);
+    private Handler handler;
+    private boolean mWrite=false;
+
 
     /**
      *
@@ -43,8 +53,9 @@ public class BTManager extends Transceiver {
 
     @Override
     public void send(byte[] b) {
-        mByteRingBuffer.put(b);
-       // mWritingThread.start();
+        this.getFrameProcessor().toFrame(b);
+        mByteRingBuffer.put(this.getFrameProcessor().getTxFrame());
+        mWritingThread.write();
     }
 
 
@@ -72,7 +83,7 @@ public class BTManager extends Transceiver {
     private void startReadWriteThreads(){
         mWritingThread = new WritingThread(mSocket);
         Log.i("ConnectThread","Tread WritingThread lancé");
-        mWritingThread.start();
+       // mWritingThread.start();
         setState(STATE_CONNECTED);
     }
     private class WritingThread extends Thread{
@@ -101,14 +112,20 @@ public class BTManager extends Transceiver {
         @Override
         public void run() {
             while (mSocket !=null){
-                try {
-                    byte[] b=mByteRingBuffer.getAll();
-                    mOutStream.write(b);
-                    afficher(b);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
+    }
+    public void write(){
+        byte[] b=mByteRingBuffer.getAll();
+        try {
+            mOutStream.write(b);
+            Message writtenMsg = handler.obtainMessage(1, -1, -1,b);
+            writtenMsg.sendToTarget();
+            Log.d("Message","le message a été envoyé. Le message était : "+b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }}

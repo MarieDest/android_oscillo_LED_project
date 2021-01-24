@@ -15,22 +15,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.slider.Slider;
 
 import static android.os.Build.VERSION.SDK_INT;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomView.CustomViewChangeListener {
     private final static int BT_CONNECT_CODE = 1;
     private final static int BT_DISCONNECT_CODE = 0;
     private final static int PERMISSIONS_REQUEST_CODE= 0;
     private final static String[] BT_DANGEROUS_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
     private OscilloManager mOscilloManager = new OscilloManager();
     private TextView mStatus;
-    private AppCompatSeekBar mSlider;
+    private CustomView mSlider;
+    private TextView mtv;
 
 
     @Override
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mStatus = findViewById(R.id.status);
         mSlider = findViewById(R.id.slider);
+
         verifyBtRights();
 
     }
@@ -89,18 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
 
-            case MotionEvent.ACTION_MOVE:
-                if((int) event.getY()>200 && (int) event.getY()<500 && (int) event.getX()>200 && (int) event.getX()<500) {
-                    mOscilloManager.setCalibrationDutyCycle(mSlider);
-                    break;
-                }
-        }
-        return true;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -126,9 +115,20 @@ public class MainActivity extends AppCompatActivity {
                     mStatus.setText(address);
 
                     OscilloManager mOscilloManager = new OscilloManager();
-                    mOscilloManager.detachTransceiver(address);
+                    mOscilloManager.detachTransceiver();
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onChange(float value) {
+
+        mOscilloManager.setCalibrationDutyCycle((int) value);
+    }
+
+    @Override
+    public void onDoubleClick(float value) {
+
     }
 }

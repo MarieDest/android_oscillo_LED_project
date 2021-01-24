@@ -6,18 +6,20 @@ import com.google.android.material.badge.BadgeDrawable;
 
 public class OscilloManager implements Transceiver.TransceiverListener {
 
-    private Transceiver mTransceiver = new BTManager(); //ici le transceiver peut etre que BTManager puisque c'est la seule classe
-    // qui a ce type.
+    private Transceiver mTransceiver;//= new BTManager(); //ici le transceiver peut etre que BTManager puisque c'est la seule classe qui a ce type.
+
+
 
     public void getInstance(){
 
     }
 
-    public void setCalibrationDutyCycle(AppCompatSeekBar mSlider){
+    public void setCalibrationDutyCycle(int value){
         FrameProcessor mFrameProcessor = new FrameProcessor();
-        byte[] b=new byte[]{0x0A,(byte)mSlider.getAlpha()};
-        mFrameProcessor.toFrame(b);
-        mTransceiver.send(mFrameProcessor.getTxFrame());
+        byte[] b=new byte[]{0x0A,(byte) value};
+
+        mTransceiver.attachFrameProcessor(mFrameProcessor);
+        mTransceiver.send(b);
 
     }
     public void getStatus(){
@@ -26,7 +28,7 @@ public class OscilloManager implements Transceiver.TransceiverListener {
     public void attachTransceiver(String adresse){
         mTransceiver.connect(adresse);
     }
-    public void detachTransceiver(String adresse){
+    public void detachTransceiver(){
         mTransceiver.disconnect();
     }
 

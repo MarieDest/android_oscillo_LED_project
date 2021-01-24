@@ -7,6 +7,11 @@ public abstract class Transceiver {
 
     private int mState;
     private TransceiverListener mTransceiverListener;
+
+    public FrameProcessor getFrameProcessor() {
+        return mFrameProcessor;
+    }
+
     private FrameProcessor mFrameProcessor;
 
 
