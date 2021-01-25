@@ -25,6 +25,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Set;
 
+/**
+ * Classe de connexion Bluetooth. Elle est liée au fichier b_t_connect_activity.xml
+ */
 public class BTConnectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private Toolbar mToolbar;
     private Button mScan;
@@ -41,6 +44,10 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
 
     private enum Action {START,STOP}
 
+    /**
+     * méthode de création de champ en fonction du nombre d'éléments trouvés.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +79,11 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
         }
 
         mBroadcastReceiver=new BroadcastReceiver() {
+            /**
+             * méthode qui recoit les résultats des scans et crée des devices associés s'ils n'existent pas encore
+             * @param context
+             * @param intent
+             */
             @Override
             public void onReceive(Context context, Intent intent) {
                 switch (intent.getAction()) {
@@ -94,6 +106,9 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
         };
     }
 
+    /**
+     * fonction qui arrête le scan Bluetooth
+     */
    @Override
     protected void onPause() {
         super.onPause();
@@ -106,7 +121,13 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
         }*/
     }
 
-
+    /**
+     * fonction qui s'active quand on clique sur un élément. On récupère le nom du device
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent() ;
@@ -131,6 +152,10 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
+    /**
+     * Si on clique sur le bouton scan, on active le scan du bluetooth
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         switch( view.getId()){
@@ -147,6 +172,12 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+     * fonction qui, en fonction du code de résultat, affiche un texte ou change le bouton scan
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -163,6 +194,9 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     * Il y a 2 boutons l'un sur l'autre et on met celui que l'on veut en visible.
+     */
     private void toggleBtScan(){
         if(mScan.getText().equals("Scanner")){
             btScan(Action.START);
@@ -174,6 +208,11 @@ public class BTConnectActivity extends AppCompatActivity implements View.OnClick
             mScan.setText("Scanner");
         }
     }
+
+    /**
+     * fonction qui démarre ou arrête le scan en fonction de l'action demandée.
+     * @param startStop
+     */
     private void btScan(Action startStop){
         if (startStop == Action.START){
             IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);

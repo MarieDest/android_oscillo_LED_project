@@ -21,7 +21,10 @@ import android.widget.Toast;
 
 import static android.os.Build.VERSION.SDK_INT;
 
-public class MainActivity extends AppCompatActivity implements CustomView.CustomViewChangeListener {
+/**
+ * classe principale, elle permet de verifier les droits d'accès et de lancer la connexion
+ */
+public class MainActivity extends AppCompatActivity  {
     private final static int BT_CONNECT_CODE = 1;
     private final static int BT_DISCONNECT_CODE = 0;
     private final static int PERMISSIONS_REQUEST_CODE= 0;
@@ -31,7 +34,10 @@ public class MainActivity extends AppCompatActivity implements CustomView.Custom
     private CustomView mSlider;
     private TextView mtv;
 
-
+    /**
+     * création d'instance de status et slider
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +49,22 @@ public class MainActivity extends AppCompatActivity implements CustomView.Custom
 
     }
 
+    /**
+     * méthode de création du menu
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
 
+    /**
+     * méthode qui s'active lors du clique sur un élément
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int menuItem = item.getItemId();
@@ -78,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements CustomView.Custom
         }
     }
 
+    /**
+     * méthode de vérification des permissions
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == PERMISSIONS_REQUEST_CODE  ){
@@ -121,14 +143,4 @@ public class MainActivity extends AppCompatActivity implements CustomView.Custom
         }
     }
 
-    @Override
-    public void onChange(float value) {
-
-        mOscilloManager.setCalibrationDutyCycle((int) value);
-    }
-
-    @Override
-    public void onDoubleClick(float value) {
-
-    }
 }

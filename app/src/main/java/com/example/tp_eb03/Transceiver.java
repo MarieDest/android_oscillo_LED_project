@@ -1,5 +1,8 @@
 package com.example.tp_eb03;
 
+/**
+ * classe abstraite de traitement de données d'une connexion
+ */
 public abstract class Transceiver {
     public static final int STATE_NOT_CONNECTED = 0;
     public static final int STATE_CONNECTING = 1;

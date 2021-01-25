@@ -4,6 +4,9 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 
 import com.google.android.material.badge.BadgeDrawable;
 
+/**
+ * classe qui implémente la classe transceiver listener seul la méthode setCalibrationDutyCircle est implémentée
+ */
 public class OscilloManager implements Transceiver.TransceiverListener {
 
     private Transceiver mTransceiver;//= new BTManager(); //ici le transceiver peut etre que BTManager puisque c'est la seule classe qui a ce type.
@@ -14,6 +17,10 @@ public class OscilloManager implements Transceiver.TransceiverListener {
 
     }
 
+    /**
+     * méthode qui crée un objet FrameProcessor et l'attache au transceiver et crée une série de byte pour l'envoyer
+     * @param value
+     */
     public void setCalibrationDutyCycle(int value){
         FrameProcessor mFrameProcessor = new FrameProcessor();
         byte[] b=new byte[]{0x0A,(byte) value};

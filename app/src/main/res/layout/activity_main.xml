@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="424dp"
+        app:layout_constraintGuide_end="307dp"
         tools:visibility="visible" />
     <com.example.tp_eb03.CustomView
         android:layout_width="wrap_content"

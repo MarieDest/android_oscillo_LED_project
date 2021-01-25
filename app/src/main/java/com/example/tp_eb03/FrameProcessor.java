@@ -1,5 +1,8 @@
 package com.example.tp_eb03;
 
+/**
+ * classe qui fabrique des trames standardisés
+ */
 public class FrameProcessor {
     public byte[] getTxFrame() {
         return txFrame;
@@ -12,6 +15,11 @@ public class FrameProcessor {
     private final static byte onSetDutyCycle = 0x0A;
 
     public void fromFrame(){}
+
+    /**
+     * création de trames grâce aux données
+     * @param ValueToSendAndID
+     */
     public void toFrame(byte[] ValueToSendAndID){
         if(ValueToSendAndID[0]==0x0A){
         byte lengthTrame = 0x01;
